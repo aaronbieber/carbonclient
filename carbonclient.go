@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
+	"time"
 
 	"github.com/MacIt/pickle"
 )
@@ -18,7 +19,7 @@ type CarbonClient struct {
 }
 
 type TimedMetricValue struct {
-	Timestamp int64
+	Timestamp time.Time
 	Value     interface{}
 }
 
@@ -39,7 +40,7 @@ func (c *CarbonClient) prepareMetrics(metrics []TimedMetric) []pickle.Tuple {
 	for _, metric := range metrics {
 		stats = append(stats, pickle.Tuple{
 			metric.Path,
-			pickle.Tuple{metric.Value.Timestamp, metric.Value.Value},
+			pickle.Tuple{metric.Value.Timestamp.Unix(), metric.Value.Value},
 		})
 	}
 	return stats

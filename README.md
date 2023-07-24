@@ -29,7 +29,7 @@ stats = append(stats,
   carbonclient.TimedMetric{
     Path: "stats.gauges.widgetcount",
     Value: carbonclient.TimedMetricValue{
-      Timestamp: time.Now().Unix(),
+      Timestamp: time.Now(),
       Value:     42}})
 ```
 
