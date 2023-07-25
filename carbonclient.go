@@ -28,11 +28,15 @@ type TimedMetric struct {
 	Value TimedMetricValue
 }
 
-func NewCarbonClient(host string, port int) *CarbonClient {
+func NewCarbonClient(host string, port int) (*CarbonClient, error) {
+	if port == PLAINTEXT_PORT {
+		return &CarbonClient{}, fmt.Errorf("plaintext protocol not currently supported")
+	}
+
 	return &CarbonClient{
 		Host: host,
 		Port: port,
-	}
+	}, nil
 }
 
 func (c *CarbonClient) prepareMetrics(metrics []TimedMetric) []pickle.Tuple {
